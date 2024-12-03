@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import axios from "axios";
 const SignUpForm = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -14,14 +14,35 @@ const SignUpForm = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission logic here
-    console.log(formData);
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match!");
+      return;
+    }
+    try {
+      // API call to your backend (replace with your actual API URL)
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/auth/register`,
+        {
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+          team: formData.team,
+        }
+      );
+      // setSuccess("Registration successful!");
+      // setError("");
+      // console.log(response.data);
+    } catch (err) {
+      // setError("An error occurred during registration.");
+      // setSuccess("");
+      console.error(err.response ? err.response.data : err.message);
+    }
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+    <div className=" m-4 flex justify-center items-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
         <h2 className="text-2xl font-semibold text-center mb-6">Sign Up</h2>
 
@@ -119,8 +140,19 @@ const SignUpForm = () => {
               type="submit"
               className="btn btn-primary w-full py-2 px-4 rounded-lg text-white font-semibold"
             >
-              Sign Up
+              Signup
             </button>
+          </div>
+          <div className="m-4 flex justify-center">
+            <div>
+              <p className="font-semibold">Have an account?</p>
+              <button
+                type="submit"
+                className="btn btn-primary w-full py-2 px-4 rounded-lg text-white font-semibold"
+              >
+                Login
+              </button>
+            </div>
           </div>
         </form>
       </div>

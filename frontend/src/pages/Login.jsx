@@ -62,6 +62,17 @@ const LoginForm = () => {
               Login
             </button>
           </div>
+          <div className="m-4 flex justify-center">
+            <div>
+              <p className="font-semibold">Don't have an account?</p>
+              <button
+                type="submit"
+                className="btn btn-primary w-full py-2 px-4 rounded-lg text-white font-semibold"
+              >
+                SignUp
+              </button>
+            </div>
+          </div>
         </form>
       </div>
     </div>

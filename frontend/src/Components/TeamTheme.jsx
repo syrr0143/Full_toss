@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 // import { AuthContext } from "../context/AuthContext";
 import image from "../assets/teams/rcb/Jersey.jpg";
+const API_URL = import.meta.env.main_url;
 
 import teams from "../assets/TeamTheme/teamTheme";
 import ProductCard from "./ProductCard";
