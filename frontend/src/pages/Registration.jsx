@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 const SignUpForm = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -8,6 +10,8 @@ const SignUpForm = () => {
     confirmPassword: "",
     team: "",
   });
+  const [loading, setLoading] = useState(false);
+  const [error, seterror] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -15,15 +19,16 @@ const SignUpForm = () => {
   };
 
   const handleSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
-      setError("Passwords do not match!");
+      seterror("Passwords do not match!");
       return;
     }
     try {
       // API call to your backend (replace with your actual API URL)
       const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/auth/register`,
+        `${import.meta.env.VITE_BACKEND_URL}auth/register`,
         {
           name: formData.name,
           email: formData.email,
@@ -31,12 +36,14 @@ const SignUpForm = () => {
           team: formData.team,
         }
       );
-      // setSuccess("Registration successful!");
-      // setError("");
-      // console.log(response.data);
+      if (response) {
+        setLoading(false);
+      }
+      setsuccess("Registration successful!");
+      seterror("");
     } catch (err) {
-      // setError("An error occurred during registration.");
-      // setSuccess("");
+      seterror("An error occurred during registration.");
+      setsuccess("");
       console.error(err.response ? err.response.data : err.message);
     }
   };
@@ -136,18 +143,25 @@ const SignUpForm = () => {
           </div>
           {/* Submit Button */}
           <div className="flex justify-center">
-            <button
-              type="submit"
-              className="btn btn-primary w-full py-2 px-4 rounded-lg text-white font-semibold"
-            >
-              Signup
-            </button>
+            {loading ? (
+              <button className="btn btn-square">
+                <span className="loading loading-spinner"></span>
+              </button>
+            ) : (
+              <button
+                type="submit"
+                className="btn btn-primary w-full py-2 px-4 rounded-lg text-white font-semibold"
+              >
+                Loading
+              </button>
+            )}
           </div>
           <div className="m-4 flex justify-center">
             <div>
               <p className="font-semibold">Have an account?</p>
               <button
-                type="submit"
+                type="button"
+                onClick={() => navigate("/login")}
                 className="btn btn-primary w-full py-2 px-4 rounded-lg text-white font-semibold"
               >
                 Login

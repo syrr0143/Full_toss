@@ -1,14 +1,18 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Navbar from "./Components/Navbar";
+
 import Footer from "./Components/Footer";
-import TeamTheme from "./Components/TeamTheme";
 import Registration from "./pages/Registration";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Dashboard from "./pages/Dashboard";
+import { ThemeProvider, useTheme } from "./Context/AuthContext";
 
 function App() {
+  const { theme, teamTheme } = useTheme();
+  const [selectedTeam, setSelectedTeam] = useState("RCB");
+
   return (
     <Router>
       <div>

@@ -1,11 +1,12 @@
 import React, { useContext } from "react";
 // import { AuthContext } from "../context/AuthContext";
-import image from "../assets/teams/rcb/Jersey.jpg";
+// import image from "../assets/teams/rcb/Jersey.jpg";
 const API_URL = import.meta.env.main_url;
 
 import teams from "../assets/TeamTheme/teamTheme";
 import ProductCard from "./ProductCard";
 const TeamTheme = () => {
+  let image = "www.google.com";
   // Get the team assigned to the user from context
   //   const { team } = useContext(AuthContext);
   let team = 2;
